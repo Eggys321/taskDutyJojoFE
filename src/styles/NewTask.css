@@ -1,0 +1,36 @@
+.fieldset-container, .fieldset-containers{
+    position: relative;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.fieldset-container .form-select{
+    outline: none;
+    border: white;
+}
+
+.fieldset-container input{
+    border: #fff;
+    height: 3rem;
+    outline: none;
+}
+
+.fieldset-containers input{
+    border: #fff;
+    height: 10rem;
+    outline: none;
+    padding-bottom: 7rem;
+}
+
+
+.fieldset-title{
+    position: absolute;
+    background-color: #fff;
+    top: -10px;
+    left: 10px;
+    padding: 0 10px;
+    z-index: 1;
+}
+

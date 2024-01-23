@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Signika+Negative&display=swap');
+
+.hero-container button {
+  background-color: #974fd0;
+}
+
+span {
+  color: #974fd0;
+}
+
+p {
+  color: #737171;
+  font-family: "Signika Negative", sans-serif;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+h2 {
+  font-family: "Signika Negative", sans-serif;
+  color: #292929;
+  font-size: 47px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
