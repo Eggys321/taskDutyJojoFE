@@ -29,7 +29,7 @@ const EditTask = () => {
     const navigate = useNavigate();
     const handleUpdate = async(userId)=> {
       try {
-       let data =  await axios.patch(`https://task-duty-jojo.onrender.com/api/task/${userId}`, {
+       let data =  await axios.patch(`https://task-duty-jojo.onrender.com/${userId}`, {
         title,
         description,
         tags
