@@ -9,14 +9,15 @@ const EditTask = () => {
   const [description, setDescription] = useState("");
   const [tags, setTags] = useState("");
   const { userId } = useParams();
-  console.log(userId);
+  // console.log(userId);
+  const navigate = useNavigate();
   
   const fetchedData = async () => {
     try {
       let dataGotten = await axios.get(
         `https://task-duty-jojo.onrender.com/api/task/${userId}`
         );
-        console.log(dataGotten.data.task);
+        // console.log(dataGotten.data.task);
         // setData(dataGotten.data.task)
         setTitle(dataGotten.data.task.title);
         setDescription(dataGotten.data.task.description);
@@ -26,20 +27,20 @@ const EditTask = () => {
       }
     };
     
-    const navigate = useNavigate();
-    const handleUpdate = async(userId)=> {
+    async function handleUpdate (userId){
       try {
-       let data =  await axios.patch(`https://task-duty-jojo.onrender.com/${userId}`, {
+       let data =  await axios.patch(`http://localhost:6767/api/task/${userId}`, {
         title,
         description,
         tags
       });
       console.log(data);
-      navigate("/AllTask");
+      navigate('/AllTask');
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
     }
   }
+  // console.log(1234);
   useEffect(() => {
     document.title = "Edit || Page";
     fetchedData();
@@ -47,7 +48,7 @@ const EditTask = () => {
   return (
     <div className="container">
       <h1>EditTask</h1>
-      <form>
+      <Form>
         <input
           type="text"
           value={title}
@@ -80,7 +81,7 @@ const EditTask = () => {
         >
           update
         </button>
-      </form>
+      </Form>
     </div>
   );
 };
