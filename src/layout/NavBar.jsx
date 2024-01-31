@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -8,13 +8,19 @@ import navImg from "../assets/navImg.svg";
 import { Button } from "react-bootstrap";
 import SignUp from "../auth/SignUp";
 import SignIn from "../auth/SignIn";
+import AuthContext from "../context/AuthContext";
+
 
 const NavBar = () => {
   const [modalShow, setModalShow] = useState(false);
   const [modalSignIn,setModalSignIn] = useState(false)
   const [showAuth, setShowAuth] = useState(false);
+  const {loggedIn} = useContext(AuthContext)
   const isAbout = useMatch("/AllTask");
   const isNew = useMatch("/NewTask");
+  useEffect(()=>{
+    
+  },[loggedIn])
   return (
     <>
       <Navbar expand="lg" className="container mt-4">
@@ -33,63 +39,63 @@ const NavBar = () => {
               style={{ maxHeight: "100px" }}
               navbarScroll
             ></Nav>
-            {showAuth === false ? (
-              <>
-                <section className="d-flex gap-5 align-items-center">
-                  <div>
-                    <Button
-                      variant=""
-                      className="bg-dark outline-none text-light "
-                      onClick={() => setModalShow(true)}
-                    >
-                      sign up
-                    </Button>
-
-                    <SignUp
-                      show={modalShow}
-                      onHide={() => setModalShow(false)}
-                    />
-                  </div>
-                  {/* signIn */}
-                  <div className="">
-                    <Button
-                      variant=""
-                      className="bg-dark outline-none text-light "
-                      onClick={() => setModalSignIn(true)}
-                    >
-                      sign In
-                    </Button>
-
-                    <SignIn
-                      show={modalSignIn}
-                      onHide={() => setModalSignIn(false)}
-                    />
-                  </div>
-                  <Link className="text-decoration-none text-dark d-none d-lg-block">
-                    <img src={navImg} alt="nav-img" />
-                  </Link>
-                </section>
-              </>
+            {loggedIn ? (
+               <>
+               <div className="d-flex gap-4 lh-base align-items-center">
+               {!isNew && "AllTask" && (
+                 <Link to="/NewTask" className="text-decoration-none text-dark">
+                   <h4> New Task </h4>
+                 </Link>
+               )}
+ 
+               {!isAbout && "/AllTask" && (
+                 <Link to="/AllTask" className="text-decoration-none text-dark">
+                   <h4> All Task </h4>
+                 </Link>
+               )}
+ 
+               <Link className="text-decoration-none text-dark d-none d-lg-block">
+                 <img src={navImg} alt="nav-img" />{" "}
+               </Link>
+             </div>
+               </>
             ) : (
               <>
-              <div className="d-flex gap-4 lh-base align-items-center">
-              {!isNew && "AllTask" && (
-                <Link to="/NewTask" className="text-decoration-none text-dark">
-                  <h4> New Task </h4>
-                </Link>
-              )}
+              <section className="d-flex gap-5 align-items-center">
+                <div>
+                  <Button
+                    variant=""
+                    className="bg-dark outline-none text-light "
+                    onClick={() => setModalShow(true)}
+                  >
+                    sign up
+                  </Button>
 
-              {!isAbout && "/AllTask" && (
-                <Link to="/AllTask" className="text-decoration-none text-dark">
-                  <h4> All Task </h4>
-                </Link>
-              )}
+                  <SignUp
+                    show={modalShow}
+                    onHide={() => setModalShow(false)}
+                  />
+                </div>
+                {/* signIn */}
+                <div className="">
+                  <Button
+                    variant=""
+                    className="bg-dark outline-none text-light "
+                    onClick={() => setModalSignIn(true)}
+                  >
+                    sign In
+                  </Button>
 
-              <Link className="text-decoration-none text-dark d-none d-lg-block">
-                <img src={navImg} alt="nav-img" />{" "}
-              </Link>
-            </div>
-              </>
+                  <SignIn
+                    show={modalSignIn}
+                    onHide={() => setModalSignIn(false)}
+                  />
+                </div>
+                <Link className="text-decoration-none text-dark d-none d-lg-block">
+                  <img src={navImg} alt="nav-img" />
+                </Link>
+              </section>
+            </>
             )}
 
             

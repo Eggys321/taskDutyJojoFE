@@ -25,6 +25,8 @@ function SignIn(props) {
           console.log(res);
           if(res.success === true){
             toast.success(res.message)
+            setEmail('')
+            setPassword('')
             
           }
           if(res.success === false || res.name === "ValidationError"){
