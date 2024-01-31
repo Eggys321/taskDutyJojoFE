@@ -16,7 +16,7 @@ const NewTask = () => {
   const handleSubmit = async (e)=>{
     e.preventDefault()
     try {
-      const data = await axios.post('http://localhost:6767/api/task',{
+      const data = await axios.post('https://task-duty-jojo.onrender.com/api/task',{
         title,
         description,
         tags
