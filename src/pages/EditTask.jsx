@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
+import toast from "react-hot-toast";
 
 const EditTask = () => {
   const [data, setData] = useState([]);
@@ -34,7 +35,7 @@ const EditTask = () => {
   };
 
   async function handleUpdate(e) {
-    e.preventDefault()
+    e.preventDefault();
     try {
       let data = await axios.patch(
         `https://task-duty-jojo.onrender.com/api/task/${userId}`,
@@ -50,6 +51,10 @@ const EditTask = () => {
           },
         }
       );
+      if ((data.data.success = true)) {
+        // alert(data.data.message)
+        toast.success(data.data.message);
+      }
       console.log(data);
       navigate("/AllTask");
     } catch (error) {
@@ -61,9 +66,53 @@ const EditTask = () => {
     fetchedData();
   }, [userId]);
   return (
-    <div className="container">
+    <div className="container my-5">
       <h1>EditTask</h1>
-      <Form>
+      <form action="">
+        <div className="fieldset-container m-5 h-25">
+          <h5 className="fieldset-title fs-4">Task Title</h5>
+          <input
+            type="text"
+            className="w-100"
+            placeholder="E.g Project Defense, Assignment ..."
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        </div>
+        <div className="fieldset-containers m-5 h-25">
+          <h5 className="fieldset-title fs-4">Description</h5>
+          <input
+            type="text"
+            className="w-100"
+            placeholder="Briefly describe your task ..."
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+        </div>
+        {/* options */}
+        <div className="fieldset-container m-5">
+          <h5 className="fieldset-title fs-4">Tags</h5>
+          <Form.Select
+            id="disabledSelect"
+            value={tags}
+            onChange={(e) => setTags(e.target.value)}
+          >
+            <option value="urgent">urgent</option>
+            <option value="important"> important </option>
+          </Form.Select>
+        </div>
+        <div>
+          <button
+            className="btn btn-lg text-light fs-4 w-100"
+            style={{ backgroundColor: "#974FD0" }}
+            onClick={handleUpdate}
+          >
+            Update
+          </button>
+        </div>
+      </form>
+      {/* ---- */}
+      {/* <Form>
         <input
           type="text"
           value={title}
@@ -85,18 +134,14 @@ const EditTask = () => {
             value={tags}
             onChange={(e) => setTags(e.target.value)}
           >
-            {/* <option>----</option> */}
             <option value="urgent">urgent</option>
             <option value="important"> important </option>
           </Form.Select>
         </Form.Group>
-        <button
-          className="btn btn-success"
-          onClick={handleUpdate}
-        >
+        <button className="btn btn-success" onClick={handleUpdate}>
           update
         </button>
-      </Form>
+      </Form> */}
     </div>
   );
 };
