@@ -1,10 +1,12 @@
 import Modal from "react-bootstrap/Modal";
 import toast from "react-hot-toast";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import AuthContext from "../context/AuthContext";
 
 function SignIn(props) {
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('')
+    const {setLoggedIn} = useContext(AuthContext)
  const handleLogin = async (e)=>{
     e.preventDefault()
     const logInData = {
@@ -13,7 +15,7 @@ function SignIn(props) {
       };
     // console.log(email,password);
     try {
-        const fetchedData = await fetch('http://localhost:6767/api/login',{
+        const fetchedData = await fetch('https://task-duty-jojo.onrender.com/api/login',{
             method:"POST",
             headers:{
               "Content-type": "application/json",
@@ -35,7 +37,7 @@ function SignIn(props) {
           if(res.token){
             localStorage.setItem('token', res.token)
             // navigate('/')
-            // setLoggedIn(true)
+            setLoggedIn(true)
           }
         
     } catch (error) {

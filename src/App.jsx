@@ -7,6 +7,7 @@ import AllTask from './pages/AllTask';
 import EditTask from './pages/EditTask';
 import NewTask from './pages/NewTask';
 import toast, { Toaster } from 'react-hot-toast';
+import ClientTask from './components/ClientTask';
 
 
 
@@ -20,6 +21,7 @@ function App() {
       <Route path='/AllTask' element={<AllTask/>}/>
       <Route path='/NewTask' element={<NewTask/>}/>
       <Route path='/EditTask/:userId' element={<EditTask/>}/>
+      <Route path='/ClientTask/:userId' element={<ClientTask/>}/>
 
 
 

@@ -9,38 +9,53 @@ const EditTask = () => {
   const [description, setDescription] = useState("");
   const [tags, setTags] = useState("");
   const { userId } = useParams();
-  // console.log(userId);
+  const token = localStorage.getItem("token");
+
   const navigate = useNavigate();
-  
+
   const fetchedData = async () => {
     try {
       let dataGotten = await axios.get(
-        `https://task-duty-jojo.onrender.com/api/task/${userId}`
-        );
-        // console.log(dataGotten.data.task);
-        // setData(dataGotten.data.task)
-        setTitle(dataGotten.data.task.title);
-        setDescription(dataGotten.data.task.description);
-        setTags(dataGotten.data.task.tags)
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    
-    async function handleUpdate (userId){
-      try {
-       let data =  await axios.patch(`http://localhost:6767/api/task/${userId}`, {
-        title,
-        description,
-        tags
-      });
+        `https://task-duty-jojo.onrender.com/api/singletask/${userId}`,
+        {
+          headers: {
+            "Content-type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(dataGotten.data.task);
+      setTitle(dataGotten.data.task.title);
+      setDescription(dataGotten.data.task.description);
+      setTags(dataGotten.data.task.tags);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  async function handleUpdate(e) {
+    e.preventDefault()
+    try {
+      let data = await axios.patch(
+        `https://task-duty-jojo.onrender.com/api/task/${userId}`,
+        {
+          title,
+          description,
+          tags,
+        },
+        {
+          headers: {
+            "Content-type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       console.log(data);
-      navigate('/AllTask');
+      navigate("/AllTask");
     } catch (error) {
       console.log(error.message);
     }
   }
-  // console.log(1234);
   useEffect(() => {
     document.title = "Edit || Page";
     fetchedData();
@@ -77,7 +92,7 @@ const EditTask = () => {
         </Form.Group>
         <button
           className="btn btn-success"
-          onClick={() => handleUpdate(userId)}
+          onClick={handleUpdate}
         >
           update
         </button>

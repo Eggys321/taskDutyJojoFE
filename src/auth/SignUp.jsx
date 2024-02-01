@@ -15,7 +15,7 @@ function SignUp(props) {
         name
     }
     try {
-        const fetchReq = await fetch('http://localhost:6767/api/register',{
+        const fetchReq = await fetch('https://task-duty-jojo.onrender.com/api/register',{
             method:"POST",
             headers:{
               "Content-type": "application/json",

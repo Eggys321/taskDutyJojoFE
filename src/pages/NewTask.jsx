@@ -12,25 +12,26 @@ const NewTask = () => {
   const [tags,setTags] = useState('')
   const navigate = useNavigate()
 
-  const token = localStorage.getItem("token");
+ const taskDetails = {
+  title,
+  description,
+  tags
+ }
 
-  const taskDetails = {
-    title,
-    description,
-    tags
-  }
+ const token = localStorage.getItem('token')
   const handleSubmit = async (e)=>{
     e.preventDefault()
     try {
-      const datas = await fetch('http://localhost:6767/api/task',{
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(taskDetails),
+      const req = await fetch('https://task-duty-jojo.onrender.com/api/task',{
+       method:"POST",
+       headers:{
+        "Content-type":'application/json',
+        Authorization:`Bearer ${token}`
+       },
+       body:JSON.stringify(taskDetails)
+
       })
-      const data = await datas.json()
+      const data = await req.json()
       console.log(data);
       if(data.success === true){
         toast.success(data.message)
@@ -38,14 +39,13 @@ const NewTask = () => {
 
       }
       if(data.success === false){
-        // console.log(data.message);
         toast.error(data.message)
       }
      
      
     } catch (error) {
-    
-      console.log(error.message);
+      console.log(error.response.data.message);
+      toast.error(error.response.data.message)
     }
 
   }
