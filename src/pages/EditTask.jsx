@@ -1,8 +1,9 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import toast from "react-hot-toast";
+import AuthContext from "../context/AuthContext";
 
 const EditTask = () => {
   const [data, setData] = useState([]);
@@ -11,6 +12,7 @@ const EditTask = () => {
   const [tags, setTags] = useState("");
   const { userId } = useParams();
   const token = localStorage.getItem("token");
+  const {loggedIn} = useContext(AuthContext)
 
   const navigate = useNavigate();
 
@@ -64,6 +66,10 @@ const EditTask = () => {
   useEffect(() => {
     document.title = "Edit || Page";
     fetchedData();
+    if (!loggedIn) {
+      toast.error("unauthorized,please login/signup");
+      navigate("/");
+    }
   }, [userId]);
   return (
     <div className="container my-5">

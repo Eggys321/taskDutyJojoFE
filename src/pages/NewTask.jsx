@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import { Link,useNavigate } from "react-router-dom";
 import chevronLeft from "../assets/eva_arrow-ios-back-fill.svg";
 import Form from 'react-bootstrap/Form';
 import '../styles/NewTask.css'
 import axios from "axios";
 import toast from "react-hot-toast";
-
+import AuthContext from "../context/AuthContext";
 const NewTask = () => {
   const [title, setTitle] = useState('');
   const [description,setDescription] = useState('');
   const [tags,setTags] = useState('')
   const navigate = useNavigate()
+  const {loggedIn} = useContext(AuthContext)
+
 
  const taskDetails = {
   title,
@@ -51,6 +53,10 @@ const NewTask = () => {
   }
   useEffect(() => {
     document.title = "New-Task || Page";
+    if (!loggedIn) {
+      toast.error("unauthorized,please login/signup");
+      navigate("/");
+    }
   });
   const scrollToTop =()=>{
     window.scroll({top:0,behavior:"smooth"})
