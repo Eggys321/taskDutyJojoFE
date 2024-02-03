@@ -14,7 +14,7 @@ const NavBar = () => {
   const [modalShow, setModalShow] = useState(false);
   const [modalSignIn,setModalSignIn] = useState(false)
   // const [showAuth, setShowAuth] = useState(false);
-  const {loggedIn} = useContext(AuthContext)
+  const {loggedIn,logout} = useContext(AuthContext)
   const isAbout = useMatch("/AllTask");
   const isNew = useMatch("/NewTask");
   return (
@@ -49,6 +49,9 @@ const NavBar = () => {
                   <h4> All Task </h4>
                 </Link>
               )}
+              <div>
+                <button className="btn btn-danger" onClick={logout} >logout</button>
+              </div>
 
               <Link className="text-decoration-none text-dark d-none d-lg-block">
                 <img src={navImg} alt="nav-img" />{" "}

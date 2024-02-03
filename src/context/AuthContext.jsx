@@ -17,6 +17,11 @@ export const AuthProvider = ({ children }) => {
     console.log(data);
     setLoggedIn(data);
   }
+  // logout ftn
+  const logout = ()=>{
+    localStorage.removeItem("token");
+    setLoggedIn(false)
+  }
   useEffect(() => {
     getLoggedIn();
   }, []);
@@ -26,6 +31,7 @@ export const AuthProvider = ({ children }) => {
         getLoggedIn,
         loggedIn,
         setLoggedIn,
+        logout
       }}
     >
       {children}
