@@ -6,10 +6,12 @@ import { Link, useParams,useNavigate } from "react-router-dom";
 
 const AllTask = () => {
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+
 
   const {loggedIn} = useContext(AuthContext)
   useEffect(() => {
-    if (!loggedIn) {
+    if (!token) {
       toast.error("unauthorized,please login/signup");
       navigate("/Home");
     }

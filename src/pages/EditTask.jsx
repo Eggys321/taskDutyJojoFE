@@ -66,7 +66,7 @@ const EditTask = () => {
   useEffect(() => {
     document.title = "Edit || Page";
     fetchedData();
-    if (!loggedIn) {
+    if (!token) {
       toast.error("unauthorized,please login/signup");
       navigate("/Home");
     }

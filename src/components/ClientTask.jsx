@@ -59,7 +59,7 @@ const ClientTask = () => {
   useEffect(() => {
     document.title = "All-Tasks || Page";
     fetchData();
-    if (!loggedIn) {
+    if (!token) {
         toast.error("unauthorized,please login/signup");
         navigate("/Home");
       }

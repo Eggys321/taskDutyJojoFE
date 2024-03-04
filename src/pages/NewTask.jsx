@@ -12,6 +12,8 @@ const NewTask = () => {
   const [tags,setTags] = useState('')
   const navigate = useNavigate()
   const {loggedIn} = useContext(AuthContext)
+  // const token = localStorage.getItem("token");
+
 
 
  const taskDetails = {
@@ -53,7 +55,7 @@ const NewTask = () => {
   }
   useEffect(() => {
     document.title = "New-Task || Page";
-    if (!loggedIn) {
+    if (!token) {
       toast.error("unauthorized,please login/signup");
       navigate("/Home");
     }
