@@ -68,7 +68,7 @@ const EditTask = () => {
     fetchedData();
     if (!loggedIn) {
       toast.error("unauthorized,please login/signup");
-      navigate("/");
+      navigate("/Home");
     }
   }, [userId]);
   return (
