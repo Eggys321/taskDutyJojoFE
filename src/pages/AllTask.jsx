@@ -13,7 +13,7 @@ const AllTask = () => {
   useEffect(() => {
     if (!token) {
       toast.error("unauthorized,please login/signup");
-      navigate("/Home");
+      navigate("/");
     }
   });
   return (

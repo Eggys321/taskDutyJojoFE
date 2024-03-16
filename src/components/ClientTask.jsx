@@ -61,7 +61,7 @@ const ClientTask = () => {
     fetchData();
     if (!token) {
         toast.error("unauthorized,please login/signup");
-        navigate("/Home");
+        navigate("/");
       }
   }, []);
   const scrollToTop = () => {

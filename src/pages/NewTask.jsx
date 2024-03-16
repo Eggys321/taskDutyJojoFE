@@ -57,7 +57,7 @@ const NewTask = () => {
     document.title = "New-Task || Page";
     if (!token) {
       toast.error("unauthorized,please login/signup");
-      navigate("/Home");
+      navigate("/");
     }
   });
   const scrollToTop =()=>{
