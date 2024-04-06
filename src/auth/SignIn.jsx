@@ -5,7 +5,9 @@ import AuthContext from "../context/AuthContext";
 
 function SignIn(props) {
     const [email,setEmail] = useState('');
-    const [password,setPassword] = useState('')
+    const [password,setPassword] = useState('');
+    const [isClicked, setIsClicked] = useState(false)
+    const [reveal, setReveal] = useState(false);
     const {setLoggedIn} = useContext(AuthContext)
  const handleLogin = async (e)=>{
     e.preventDefault()
@@ -29,6 +31,9 @@ function SignIn(props) {
             toast.success(res.message)
             setEmail('')
             setPassword('')
+            setIsClicked(true)
+            
+
             
           }
           if(res.success === false || res.name === "ValidationError"){
@@ -45,6 +50,9 @@ function SignIn(props) {
     }
 
  }
+ function handleHide() {
+  !reveal ? setReveal(true) : setReveal(false);
+}
   return (
     <Modal
       {...props}
@@ -83,21 +91,24 @@ function SignIn(props) {
             <label className="d-block" htmlFor="password">
               Password
             </label>
-            <div className="d-flex">
+            <div className="d-flex position-relative">
             <input 
              className="form-control "
              value={password}
-            type="password" 
-            name="password" 
+             type={reveal ? "text" : "password"}             name="password" 
             placeholder="password" 
             onChange={(e)=>setPassword(e.target.value)}
             />
-            
+            <p className="position-absolute end-0 pe-2 pt-1" role="button"  onClick={handleHide} >{reveal ? "hide" : "show"}</p>
             <br />
             </div>
           </div>
         </div>
-        <button className="btn btn-primary text-white" onClick={handleLogin}>Submit</button>
+        <button className="btn btn-primary text-white" onClick={handleLogin}
+        //  disabled = {isClicked}
+         >
+          Submit
+          </button>
       </div>
 
       </form>

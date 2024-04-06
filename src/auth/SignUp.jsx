@@ -7,6 +7,8 @@ function SignUp(props) {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [isClicked, setIsClicked] = useState(false);
+  const [reveal, setReveal] = useState(false);
   const handleReg = async(e) => {
     e.preventDefault();
     const signUpData = {
@@ -29,6 +31,7 @@ function SignUp(props) {
             setEmail('')
             setName('')
             setPassword('')
+            setIsClicked(true)
             return
           }
           if(res.success === false){
@@ -49,6 +52,9 @@ function SignUp(props) {
     }
     
   };
+  function handleHide() {
+    !reveal ? setReveal(true) : setReveal(false);
+  }
 
   return (
     <Modal
@@ -102,16 +108,16 @@ function SignUp(props) {
                 <label className="sand d-block" htmlFor="password">
                   Password
                 </label>
-                <div className="d-flex num-inp">
+                <div className="d-flex num-inp position-relative">
                   <input
                     className="form-control "
-                    type="password"
-                    name="password"
+                    type={reveal ? "text" : "password"}                    name="password"
                     placeholder="password"
                     value={password}
                     onChange={(e)=>setPassword(e.target.value)}
 
                   />
+                  <p className="position-absolute end-0"role="button"  onClick={handleHide} >{reveal ? "hide" : "show"}</p>
                   <br />
                 </div>
               </div>
@@ -119,6 +125,7 @@ function SignUp(props) {
             <button
               className="btn btn-primary sub text-white"
               onClick={handleReg}
+              // disabled = {isClicked}
             >
               Submit
             </button>
