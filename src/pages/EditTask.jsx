@@ -10,6 +10,7 @@ const EditTask = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [tags, setTags] = useState("");
+  const [isClicked, setIsClicked] = useState(false);
   const { userId } = useParams();
   const token = localStorage.getItem("token");
   const {loggedIn} = useContext(AuthContext)
@@ -38,6 +39,8 @@ const EditTask = () => {
 
   async function handleUpdate(e) {
     e.preventDefault();
+    setIsClicked(true);
+
     try {
       let data = await axios.patch(
         `https://task-duty-jojo.onrender.com/api/task/${userId}`,
@@ -61,6 +64,9 @@ const EditTask = () => {
       navigate("/AllTask");
     } catch (error) {
       console.log(error.message);
+    }finally{
+      setIsClicked(false);
+
     }
   }
   useEffect(() => {
@@ -71,6 +77,8 @@ const EditTask = () => {
       navigate("/");
     }
   }, [userId]);
+  const btnText = isClicked ? "Loading..." : "Update";
+
   return (
     <div className="container my-5">
       <h1>EditTask</h1>
@@ -112,8 +120,11 @@ const EditTask = () => {
             className="btn btn-lg text-light fs-4 w-100"
             style={{ backgroundColor: "#974FD0" }}
             onClick={handleUpdate}
+            disabled={isClicked}
+
           >
-            Update
+                        {btnText}
+
           </button>
         </div>
       </form>

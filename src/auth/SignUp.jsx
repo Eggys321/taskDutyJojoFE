@@ -16,6 +16,7 @@ function SignUp(props) {
         password,
         name
     }
+    setIsClicked(true)
     try {
         const fetchReq = await fetch('https://task-duty-jojo.onrender.com/api/register',{
             method:"POST",
@@ -49,12 +50,15 @@ function SignUp(props) {
     } catch (error) {
         console.log(error.message);
         
+    }finally{
+      setIsClicked(false)
     }
     
   };
   function handleHide() {
     !reveal ? setReveal(true) : setReveal(false);
   }
+  const btnText = isClicked ? "Loading..." : "Sign In";
 
   return (
     <Modal
@@ -125,9 +129,9 @@ function SignUp(props) {
             <button
               className="btn btn-primary sub text-white"
               onClick={handleReg}
-              // disabled = {isClicked}
+              disabled = {isClicked}
             >
-              Submit
+              {btnText}
             </button>
           </div>
         </form>

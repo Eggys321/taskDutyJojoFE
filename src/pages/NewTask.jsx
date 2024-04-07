@@ -1,58 +1,58 @@
-import React, { useEffect, useState,useContext } from "react";
-import { Link,useNavigate } from "react-router-dom";
+import React, { useEffect, useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import chevronLeft from "../assets/eva_arrow-ios-back-fill.svg";
-import Form from 'react-bootstrap/Form';
-import '../styles/NewTask.css'
+import Form from "react-bootstrap/Form";
+import "../styles/NewTask.css";
 import axios from "axios";
 import toast from "react-hot-toast";
 import AuthContext from "../context/AuthContext";
 const NewTask = () => {
-  const [title, setTitle] = useState('');
-  const [description,setDescription] = useState('');
-  const [tags,setTags] = useState('')
-  const navigate = useNavigate()
-  const {loggedIn} = useContext(AuthContext)
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [tags, setTags] = useState("");
+  const [isClicked, setIsClicked] = useState(false);
+
+  const navigate = useNavigate();
+  const { loggedIn } = useContext(AuthContext);
   // const token = localStorage.getItem("token");
 
+  const taskDetails = {
+    title,
+    description,
+    tags,
+  };
 
-
- const taskDetails = {
-  title,
-  description,
-  tags
- }
-
- const token = localStorage.getItem('token')
-  const handleSubmit = async (e)=>{
-    e.preventDefault()
+  const token = localStorage.getItem("token");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsClicked(true);
     try {
-      const req = await fetch('https://task-duty-jojo.onrender.com/api/task',{
-       method:"POST",
-       headers:{
-        "Content-type":'application/json',
-        Authorization:`Bearer ${token}`
-       },
-       body:JSON.stringify(taskDetails)
-
-      })
-      const data = await req.json()
+      const req = await fetch("https://task-duty-jojo.onrender.com/api/task", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(taskDetails),
+      });
+      const data = await req.json();
       console.log(data);
-      if(data.success === true){
-        toast.success(data.message)
-        navigate('/AllTask')
-
+      if (data.success === true) {
+        toast.success(data.message);
+        navigate("/AllTask");
       }
-      if(data.success === false){
-        toast.error(data.message)
+      if (data.success === false) {
+        toast.error(data.message);
       }
-     
-     
     } catch (error) {
       console.log(error.response.data.message);
-      toast.error(error.response.data.message)
+      toast.error(error.response.data.message);
+    } finally {
+      setIsClicked(false);
     }
+  };
+  const btnText = isClicked ? "Loading..." : "Done";
 
-  }
   useEffect(() => {
     document.title = "New-Task || Page";
     if (!token) {
@@ -60,9 +60,9 @@ const NewTask = () => {
       navigate("/");
     }
   });
-  const scrollToTop =()=>{
-    window.scroll({top:0,behavior:"smooth"})
-  }
+  const scrollToTop = () => {
+    window.scroll({ top: 0, behavior: "smooth" });
+  };
   return (
     <main className="container">
       <div className="mt-4">
@@ -72,47 +72,51 @@ const NewTask = () => {
         </Link>
       </div>
       <form action="">
-
-
-      <div className="fieldset-container m-5 h-25">
-        <h5 className="fieldset-title fs-4">Task Title</h5>
-        <input
-          type="text"
-          className="w-100"
-          placeholder="E.g Project Defense, Assignment ..."
-          value={title}
-          onChange={(e)=>setTitle(e.target.value)}
-        />
-      </div>
-      <div className="fieldset-containers m-5 h-25">
-        <h5 className="fieldset-title fs-4">Description</h5>
-        <input
-          type="text"
-          className="w-100"
-          placeholder="Briefly describe your task ..."
-          value={description}
-          onChange={(e)=>setDescription(e.target.value)}
-
-        />
-      </div>
-      {/* options */}
-      <div className="fieldset-container m-5">
-        <h5 className="fieldset-title fs-4">Tags</h5>
-        <Form.Select aria-label="Default select example" className="form-select" onChange={(e)=>setTags(e.target.value)}>
-          <option value="">
-            <span>URGENT</span> <span>IMPORTANT</span>
-          </option>
-          <option value='urgent'>urgent</option>
-          <option value='important'>important</option>
-
-
-        </Form.Select>
-      </div>
-      <div>
-        <button className="btn btn-lg text-light fs-4 w-100" style={{backgroundColor:"#974FD0"}} onClick={handleSubmit}>
-          Done
-        </button>
-      </div>
+        <div className="fieldset-container m-5 h-25">
+          <h5 className="fieldset-title fs-4">Task Title</h5>
+          <input
+            type="text"
+            className="w-100"
+            placeholder="E.g Project Defense, Assignment ..."
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        </div>
+        <div className="fieldset-containers m-5 h-25">
+          <h5 className="fieldset-title fs-4">Description</h5>
+          <input
+            type="text"
+            className="w-100"
+            placeholder="Briefly describe your task ..."
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+        </div>
+        {/* options */}
+        <div className="fieldset-container m-5">
+          <h5 className="fieldset-title fs-4">Tags</h5>
+          <Form.Select
+            aria-label="Default select example"
+            className="form-select"
+            onChange={(e) => setTags(e.target.value)}
+          >
+            <option value="">
+              <span>URGENT</span> <span>IMPORTANT</span>
+            </option>
+            <option value="urgent">urgent</option>
+            <option value="important">important</option>
+          </Form.Select>
+        </div>
+        <div>
+          <button
+            className="btn btn-lg text-light fs-4 w-100"
+            style={{ backgroundColor: "#974FD0" }}
+            onClick={handleSubmit}
+            disabled={isClicked}
+          >
+            {btnText}
+          </button>
+        </div>
       </form>
       <Link onClick={scrollToTop}>
         <p className="text-center fs-4 mt-5" style={{ color: "#974FD0" }}>
